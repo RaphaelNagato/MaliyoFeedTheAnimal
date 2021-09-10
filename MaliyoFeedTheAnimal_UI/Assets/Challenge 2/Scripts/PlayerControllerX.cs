@@ -3,14 +3,26 @@
 public class PlayerControllerX : MonoBehaviour
 {
     public GameObject dogPrefab;
+    private float timeDelay = 1f;
+    private float timer = 0f;
 
     // Update is called once per frame
     void Update()
     {
-        // On spacebar press, send dog
-        if (Input.GetKeyDown(KeyCode.Space))
+        timer += Time.deltaTime;
+
+        // On spacebar press, send dog and check if the delay have been reached to avoid spamming
+        if (Input.GetKeyDown(KeyCode.Space) && (timer >= timeDelay))
         {
-            Instantiate(dogPrefab, transform.position, dogPrefab.transform.rotation);
+            SpawnDog();
+            timer = 0;
+
         }
+
+    }
+
+    void SpawnDog()
+    {
+        Instantiate(dogPrefab, transform.position, dogPrefab.transform.rotation);
     }
 }
